@@ -7,7 +7,6 @@ import com.ak0411.dtos.SignUpDto;
 import com.ak0411.entities.User;
 import com.ak0411.services.AuthService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +35,7 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<JwtDto> signIn(@RequestBody @Valid SignInDto data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         var authUser = authenticationManager.authenticate(usernamePassword);
         var accessToken = tokenService.generateAccessToken((User) authUser.getPrincipal());
         return ResponseEntity.ok(new JwtDto(accessToken));

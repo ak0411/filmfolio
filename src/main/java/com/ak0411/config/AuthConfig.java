@@ -29,6 +29,7 @@ public class AuthConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/films").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/films").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/films").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/films").hasRole("ADMIN")

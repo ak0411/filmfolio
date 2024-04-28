@@ -6,12 +6,13 @@ import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@Entity
+@Table()
+@Entity(name = "films")
 public class Film {
 
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     private Integer year;
     private Set<Genre> genre;
@@ -25,11 +26,11 @@ public class Film {
         this.genre = genre;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

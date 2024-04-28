@@ -1,0 +1,11 @@
+-- Populate films table
+-- INSERT INTO films (title, year, genre) VALUES ('Shutter', 2004, '{7, 8, 10}');
+-- INSERT INTO films (title, year, genre) VALUES ('Noroi', 2005, '{7, 8, 10}');
+-- INSERT INTO films (title, year, genre) VALUES ('Die Hard', 1988, '{0}');
+-- INSERT INTO films (title, year, genre) VALUES ('Home Alone', 1990, '{1}');
+-- INSERT INTO films (title, year, genre) VALUES ('Forrest Gump', 1994, '{2, 3}');
+-- INSERT INTO films (title, year, genre) VALUES ('The Lord of the Rings: The Fellowship of the Ring', 2001, '{4, 6}');
+-- INSERT INTO films (title, year, genre) VALUES ('The Matrix', 1999, '{0, 5}');
+-- INSERT INTO films (title, year, genre) VALUES ('The Silence of the Lambs', 1991, '{8}');
+-- INSERT INTO films (title, year, genre) VALUES ('Spirited Away', 2001, '{9}');
+

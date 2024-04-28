@@ -1,15 +1,21 @@
 package com.ak0411.enums;
 
 public enum Genre {
-    ACTION,
-    COMEDY,
-    DRAMA,
-    ROMANCE,
-    ADVENTURE,
-    SCIENCE_FICTION,
-    FANTASY,
-    HORROR,
-    THRILLER,
-    ANIMATION,
-    MYSTERY
+    ACTION("Action"),
+    COMEDY("Comedy"),
+    DRAMA("Drama"),
+    ROMANCE("Romance"),
+    ADVENTURE("Adventure"),
+    SCIENCE_FICTION("Science Fiction"),
+    FANTASY("Fantasy"),
+    HORROR("Horror"),
+    THRILLER("Thriller"),
+    ANIMATION("Animation"),
+    MYSTERY("Mystery");
+
+    private final String label;
+
+    Genre(String label) {
+        this.label = label;
+    }
 }
