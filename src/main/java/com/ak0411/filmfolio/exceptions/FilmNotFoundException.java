@@ -1,4 +1,4 @@
-package com.ak0411.exceptions;
+package com.ak0411.filmfolio.exceptions;
 
 public class FilmNotFoundException extends RuntimeException {
     public FilmNotFoundException(Long id) {

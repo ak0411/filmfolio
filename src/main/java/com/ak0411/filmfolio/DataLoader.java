@@ -1,25 +1,22 @@
-package com.ak0411.services;
+package com.ak0411.filmfolio;
 
-import com.ak0411.dtos.SignUpDto;
-import com.ak0411.entities.Film;
-import com.ak0411.enums.Genre;
-import com.ak0411.enums.UserRole;
-import com.ak0411.repositories.FilmRepository;
+import com.ak0411.filmfolio.dtos.SignUpDto;
+import com.ak0411.filmfolio.entities.Film;
+import com.ak0411.filmfolio.enums.Genre;
+import com.ak0411.filmfolio.enums.UserRole;
+import com.ak0411.filmfolio.repositories.FilmRepository;
+import com.ak0411.filmfolio.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-@Service
-public class DatabaseInitializationService {
-
-    @Autowired
-    private FilmRepository filmRepository;
-
-    @Autowired
-    private AuthService authService;
+@Component
+public class DataLoader implements ApplicationRunner {
 
     private final List<Film> initialFilms = new ArrayList<Film>() {{
         add(new Film("Shutter", 2004, Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)));
@@ -32,19 +29,28 @@ public class DatabaseInitializationService {
         add(new Film("The Silence of the Lambs", 1991, Set.of(Genre.THRILLER)));
         add(new Film("Spirited Away", 2001, Set.of(Genre.ANIMATION)));
     }};
-
     private final List<SignUpDto> initialUsers = new ArrayList<SignUpDto>() {{
         add(new SignUpDto("admin", "password", UserRole.ADMIN));
         add(new SignUpDto("willy", "willywonka", UserRole.USER));
     }};
+    @Autowired
+    private FilmRepository filmRepository;
+    @Autowired
+    private AuthService authService;
 
-    public void populateFilmsTable() {
+    private void populateFilmsTable() {
         filmRepository.saveAll(initialFilms);
     }
 
-    public void populateUsersTable() {
+    private void populateUsersTable() {
         for (SignUpDto userData : initialUsers) {
             authService.signUp(userData);
         }
+    }
+
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        populateFilmsTable();
+        populateUsersTable();
     }
 }

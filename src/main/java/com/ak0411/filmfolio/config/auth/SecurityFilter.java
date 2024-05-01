@@ -1,6 +1,6 @@
-package com.ak0411.config.auth;
+package com.ak0411.filmfolio.config.auth;
 
-import com.ak0411.repositories.UserRepository;
+import com.ak0411.filmfolio.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

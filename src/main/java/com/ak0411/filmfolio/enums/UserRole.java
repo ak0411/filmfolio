@@ -1,4 +1,4 @@
-package com.ak0411.enums;
+package com.ak0411.filmfolio.enums;
 
 public enum UserRole {
     ADMIN("admin"),

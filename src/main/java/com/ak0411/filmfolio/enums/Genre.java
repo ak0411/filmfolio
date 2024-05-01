@@ -1,4 +1,4 @@
-package com.ak0411.enums;
+package com.ak0411.filmfolio.enums;
 
 public enum Genre {
     ACTION("Action"),
@@ -17,5 +17,9 @@ public enum Genre {
 
     Genre(String label) {
         this.label = label;
+    }
+
+    public String getValue() {
+        return this.label;
     }
 }

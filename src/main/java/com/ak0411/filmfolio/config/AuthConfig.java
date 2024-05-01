@@ -1,6 +1,6 @@
-package com.ak0411.config;
+package com.ak0411.filmfolio.config;
 
-import com.ak0411.config.auth.SecurityFilter;
+import com.ak0411.filmfolio.config.auth.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

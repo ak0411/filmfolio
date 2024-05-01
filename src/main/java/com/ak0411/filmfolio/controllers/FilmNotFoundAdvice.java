@@ -1,9 +1,8 @@
-package com.ak0411.controllers;
+package com.ak0411.filmfolio.controllers;
 
-import com.ak0411.exceptions.FilmNotFoundException;
+import com.ak0411.filmfolio.exceptions.FilmNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;

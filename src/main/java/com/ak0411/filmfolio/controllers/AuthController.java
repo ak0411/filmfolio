@@ -1,11 +1,11 @@
-package com.ak0411.controllers;
+package com.ak0411.filmfolio.controllers;
 
-import com.ak0411.config.auth.TokenProvider;
-import com.ak0411.dtos.JwtDto;
-import com.ak0411.dtos.SignInDto;
-import com.ak0411.dtos.SignUpDto;
-import com.ak0411.entities.User;
-import com.ak0411.services.AuthService;
+import com.ak0411.filmfolio.config.auth.TokenProvider;
+import com.ak0411.filmfolio.dtos.JwtDto;
+import com.ak0411.filmfolio.dtos.SignInDto;
+import com.ak0411.filmfolio.dtos.SignUpDto;
+import com.ak0411.filmfolio.entities.User;
+import com.ak0411.filmfolio.services.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.ak0411.exceptions;
+package com.ak0411.filmfolio.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

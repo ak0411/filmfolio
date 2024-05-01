@@ -1,6 +1,6 @@
-package com.ak0411.config.auth;
+package com.ak0411.filmfolio.config.auth;
 
-import com.ak0411.entities.User;
+import com.ak0411.filmfolio.entities.User;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

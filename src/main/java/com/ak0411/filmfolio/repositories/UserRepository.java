@@ -1,6 +1,6 @@
-package com.ak0411.repositories;
+package com.ak0411.filmfolio.repositories;
 
-import com.ak0411.entities.User;
+import com.ak0411.filmfolio.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 

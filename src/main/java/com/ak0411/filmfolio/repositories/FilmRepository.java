@@ -1,6 +1,6 @@
-package com.ak0411.repositories;
+package com.ak0411.filmfolio.repositories;
 
-import com.ak0411.entities.Film;
+import com.ak0411.filmfolio.entities.Film;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FilmRepository

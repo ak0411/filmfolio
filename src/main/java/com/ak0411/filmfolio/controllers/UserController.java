@@ -1,7 +1,7 @@
-package com.ak0411.controllers;
+package com.ak0411.filmfolio.controllers;
 
-import com.ak0411.entities.User;
-import com.ak0411.repositories.UserRepository;
+import com.ak0411.filmfolio.entities.User;
+import com.ak0411.filmfolio.repositories.UserRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +17,9 @@ class UserController {
     UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    
+
     @GetMapping
-    List<User> getAll() { return userRepository.findAll(); }
+    List<User> getAll() {
+        return userRepository.findAll();
+    }
 }
