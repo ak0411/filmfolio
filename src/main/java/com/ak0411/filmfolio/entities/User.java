@@ -1,6 +1,7 @@
 package com.ak0411.filmfolio.entities;
 
 import com.ak0411.filmfolio.enums.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @JsonIncludeProperties({"id", "username", "favoriteFilms"})
 @Builder
 public class User implements UserDetails {
@@ -29,6 +30,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @JsonIgnoreProperties({"numberOfFavorites"})
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_film",
             joinColumns = @JoinColumn(name = "film_id"),
@@ -67,5 +69,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void addFavorite(Film film) {
+        this.favoriteFilms.add(film);
+    }
+
+    public void removeFavorite(Film film) {
+        this.favoriteFilms.remove(film);
     }
 }

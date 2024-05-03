@@ -46,7 +46,7 @@ class FilmController {
         Film film = filmRepository.findById(id)
                 .orElseThrow(() -> new FilmNotFoundException(id));
 
-        currentUser.getFavoriteFilms().add(film);
+        currentUser.addFavorite(film);
 
         userRepository.save(currentUser);
     }
@@ -58,7 +58,7 @@ class FilmController {
         Film film = filmRepository.findById(id)
                 .orElseThrow(() -> new FilmNotFoundException(id));
 
-        currentUser.getFavoriteFilms().remove(film);
+        currentUser.removeFavorite(film);
 
         userRepository.save(currentUser);
     }
