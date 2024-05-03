@@ -30,8 +30,8 @@ public class DataLoader implements ApplicationRunner {
         add(new Film("Spirited Away", 2001, Set.of(Genre.ANIMATION)));
     }};
     private final List<SignUpDto> initialUsers = new ArrayList<SignUpDto>() {{
-        add(new SignUpDto("admin", "password", UserRole.ADMIN));
-        add(new SignUpDto("willy", "willywonka", UserRole.USER));
+        add(new SignUpDto(null,"admin", "password", UserRole.ADMIN));
+        add(new SignUpDto("Will","willy", "willywonka", UserRole.USER));
     }};
     @Autowired
     private FilmRepository filmRepository;

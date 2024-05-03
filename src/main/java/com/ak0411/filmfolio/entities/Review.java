@@ -1,0 +1,41 @@
+package com.ak0411.filmfolio.entities;
+
+import com.ak0411.filmfolio.enums.Rating;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Review {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String text;
+
+    @Column(nullable = false)
+    private Rating rating;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "film_id")
+    @JsonBackReference
+    private Film film;
+
+    public Review(String text, Rating rating, User user, Film film) {
+        this.text = text;
+        this.rating = rating;
+        this.user = user;
+        this.film = film;
+    }
+}
+

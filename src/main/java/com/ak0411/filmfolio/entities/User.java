@@ -1,8 +1,7 @@
 package com.ak0411.filmfolio.entities;
 
 import com.ak0411.filmfolio.enums.UserRole;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,26 +18,48 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@JsonIncludeProperties({"id", "username", "favoriteFilms"})
+@JsonIgnoreProperties({
+        "password",
+        "role",
+        "enabled",
+        "credentialsNonExpired",
+        "accountNonExpired",
+        "authorities",
+        "accountNonLocked"
+})
 @Builder
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(length = 100)
+    private String name;
+
+    @Column(unique = true, nullable = false, updatable = false, length = 20)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @JsonIgnoreProperties({"numberOfFavorites"})
+    @JsonProperty("favorite_films")
+    @JsonIgnoreProperties({"favorites", "reviews"})
     @ManyToMany
     @JoinTable(name = "user_film",
             joinColumns = @JoinColumn(name = "film_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private Set<Film> favoriteFilms;
 
-    public User(String username, String password, UserRole role) {
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Review> reviews;
+
+    public User(String name, String username, String password, UserRole role) {
+        this.name = name;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -78,5 +99,13 @@ public class User implements UserDetails {
 
     public void removeFavorite(Film film) {
         this.favoriteFilms.remove(film);
+    }
+
+    public void addReview(Review review) {
+        this.reviews.add(review);
+    }
+
+    public void removeReview(Review review) {
+        this.reviews.remove(review);
     }
 }

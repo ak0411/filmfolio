@@ -22,7 +22,7 @@ class UserController {
     }
 
     @GetMapping
-    List<User> getAll() {
+    List<User> readAll() {
         return userRepository.findAll();
     }
 
