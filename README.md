@@ -302,7 +302,7 @@ Coded with Spring Boot, FilmFolio API is a RESTful web service designed to handl
 </details>
 
 <details>
-  <summary><code>POST</code> <code><b>/api/v1/auth/signup</b></code> <code>Sign in</code></summary>
+  <summary><code>POST</code> <code><b>/api/v1/auth/signin</b></code> <code>Sign in</code></summary>
 
   ##### Parameters
   | Name      | Type               | Description                        |
