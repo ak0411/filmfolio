@@ -28,141 +28,244 @@ Coded with Spring Boot, FilmFolio API is a RESTful web service designed to handl
 
 ## API Reference
 
-### Films Endpoint
+### Film Endpoints
 
-#### Retrieve a list of all available films
+<details>
+  <summary><code>GET</code> <code><b>/api/v1/films</b></code> <code>Get all films</code></summary>
+  
+  #### Responses
+  | Http Status     | Content-Type       | Description              |
+  | :-------------- | :----------------  | :----------------------- |
+  | `200 OK`        | `application/json` | Successful operation     |
 
-```http
-  GET /api/v1/films
-```
+</details>
 
-#### Retrieve a film
+<details>
+  <summary><code>GET</code> <code><b>/api/v1/films/{id}</b></code> <code>Get film by id</code></summary>
+  
+  ##### Parameters
+  | Name      | Type     | Description                        |
+  | :-------- | :------- | :--------------------------------  |
+  | `id`      | `string` | **Required** Id of film to fetch. |
+  
+  #### Responses
+  | Http Status     | Content-Type       | Description              |
+  | :-------------- | :----------------  | :----------------------- |
+  | `200 OK`        | `application/json` | Successful operation     |
+  | `404 Not Found` | `application/json` | Film with ´id´ not found |
+</details>
 
-```http
-  GET /api/v1/films/${id}
-```
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/films</b></code> <code>Create film (Admin only)</code></summary>
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of film to fetch.|
+  ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :-----------------------------------------------------  |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
+  
+  ##### Parameters
+  | Name      | Type               | Description                        |
+  | :-------- | :----------------- | :--------------------------------  |
+  | `body`    | `application/json` | **Required** Film object to add    |
 
-#### Create a film (Admin only)
+  #### Body 
+  | Field   | Type     | Description                     |
+  | :------ | :------- | :------------------------------ |
+  | `title` | `string` | **Required** Title of the film. |
+  | `year`  | `integer`| **Required** Year of the film.  |
+  | `genre` | `array`  | Genre(s) of the film.           |
 
-```http
-  POST /api/v1/films
-```
+  The `genre` field can be `null`, or an array containing one or more of the following genre values:
+  - ACTION
+  - COMEDY
+  - DRAMA
+  - ROMANCE
+  - ADVENTURE
+  - SCIENCE_FICTION
+  - FANTASY
+  - HORROR
+  - THRILLER
+  - ANIMATION
+  - MYSTERY
 
-| Header | Value     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `Authorization`      | `Bearer <token>` | **Required**. Authentication token to identify the user. |
+  Example body:
+  ```json
+  {
+    "title": "FILM TITLE",
+    "year": 2022,
+    "genre": ["ACTION", "ADVENTURE"]
+  }
+  ```
 
-Example:
-```json
-{
-  "title": "FILM TITLE",
-  "year": 2022,
-  "genre": ["ACTION", "ADVENTURE"]
-}
-```
+  #### Responses
+  | Http Status     | Content-Type       | Description                       |
+  | :-------------- | :----------------  | :-------------------------------- |
+  | `200 OK`        | `application/json` | Successful operation              |
+  | `403 Forbidden` | `application/json` | Unauthorized or malformed request |
 
-| Field | Type     | Description                           |
-| :-------- | :------- | :------------------------------------ |
-| `title`   | `string` | **Required**. Title of the film.      |
-| `year`    | `integer`| **Required**. Year of the film.       |
-| `genre`   | `array`  | Genre(s) of the film.                 |
+</details>
 
-The `genre` field can be `null` or an array containing one or more of the following genre values:
-- ACTION
-- COMEDY
-- DRAMA
-- ROMANCE
-- ADVENTURE
-- SCIENCE_FICTION
-- FANTASY
-- HORROR
-- THRILLER
-- ANIMATION
-- MYSTERY
+<details>
+  <summary><code>DELETE</code> <code><b>/api/v1/films/{id}</b></code> <code>Delete film (Admin only)</code></summary>
 
-#### Delete a film (Admin only)
+   ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :-----------------------------------------------------  |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
 
-```http
-  DELETE /api/v1/films/${id}
-```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of film to delete.|
+  ##### Parameters
+  | Name      | Type     | Description                        |
+  | :-------- | :------- | :--------------------------------  |
+  | `id`      | `string` | **Required** Id of film to delete. |
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description          |
+  | :-------------  | :----------------  | :------------------- |
+  | `200 OK`        | `application/json` | Successful operation |
+  | `403 Forbidden` | `nosniff`          | Unauthorized         |
 
-| Header | Value     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `Authorization`      | `Bearer <token>` | **Required**. Authentication token to identify the user. |
+</details>
 
-#### Update a film (Admin only)
+<details>
+  <summary><code>PUT</code> <code><b>/api/v1/films/{id}</b></code> <code>Update film (Admin only)</code></summary>
 
-```http
-  PUT /api/v1/films/${id}
-```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of film to update.|
+   ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :-----------------------------------------------------  |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
 
-| Header | Value     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `Authorization`      | `Bearer <token>` | **Required**. Authentication token to identify the user. |
+  ##### Parameters
+  | Name      | Type               | Description                        |
+  | :-------- | :----------------- | :--------------------------------- |
+  | `id`      | `string`           | **Required** Id of film to update. |
+  | `body`    | `application/json` | **Required** Film object to add.   |
 
-#### Favorite/unfavorite a film
+  #### Body 
+  | Field   | Type     | Description                     |
+  | :------ | :------- | :------------------------------ |
+  | `title` | `string` | **Required** Title of the film. |
+  | `year`  | `integer`| **Required** Year of the film.  |
+  | `genre` | `array`  | Genre(s) of the film.           |
 
-```http
-  POST /api/v1/films/${id}/favorite
-```
+  The `genre` field can be `null`, or an array containing one or more of the following genre values:
+  - ACTION
+  - COMEDY
+  - DRAMA
+  - ROMANCE
+  - ADVENTURE
+  - SCIENCE_FICTION
+  - FANTASY
+  - HORROR
+  - THRILLER
+  - ANIMATION
+  - MYSTERY
 
-```http
-  POST /api/v1/films/${id}/unfavorite
-```
+  Example body:
+  ```json
+  {
+    "title": "FILM TITLE",
+    "year": 2022,
+    "genre": ["ACTION", "ADVENTURE"]
+  }
+  ```
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description          |
+  | :-------------  | :----------------  | :------------------- |
+  | `200 OK`        | `application/json` | Successful operation |
+  | `403 Forbidden` | `nosniff`          | Unauthorized         |
 
+</details>
 
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of film to favorite/unfavorite |
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/favorite</b></code> <code>Favorite film</code></summary>
 
-| Header | Value     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `Authorization`      | `Bearer <token>` | **Required**. Authentication token to identify the user. |
+   ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :-----------------------------------------------------  |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
 
-#### Review a film
+  ##### Parameters
+  | Name      | Type     | Description                        |
+  | :-------- | :------- | :--------------------------------  |
+  | `id`      | `string` | **Required** Id of film to favorite. |
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description              |
+  | :-------------  | :----------------  | :----------------------- |
+  | `200 OK`        | `nosniff`          | Successful operation     |
+  | `403 Forbidden` | `nosniff`          | Unauthorized             |
+  | `404 Not Found` | `applicatio/json`  | Film with `id` not found |
 
-```http
-  POST /api/v1/films/${id}/review
-```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of film to review.|
+</details>
 
-| Header | Value     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `Authorization`      | `Bearer <token>` | **Required**. Authentication token to identify the user. |
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/unfavorite</b></code> <code>Unfavorite film</code></summary>
 
-Example:
-```json
-{
-  "text": "Good film, I like.",
-  "rating": "EXCELLENT"
-}
-```
+   ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :-----------------------------------------------------  |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
 
-| Field | Type     | Description                           |
-| :-------- | :------- | :------------------------------------ |
-| `text`   | `string` | **Optinal**. review text.      |
-| `rating`    | `string`| **Required**. Year of the film.       |
+  ##### Parameters
+  | Name      | Type     | Description                        |
+  | :-------- | :------- | :--------------------------------  |
+  | `id`      | `string` | **Required** Id of film to unfavorite. |
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description              |
+  | :-------------  | :----------------  | :----------------------- |
+  | `200 OK`        | `nosniff`          | Successful operation     |
+  | `403 Forbidden` | `nosniff`          | Unauthorized             |
+  | `404 Not Found` | `applicatio/json`  | Film with `id` not found |
 
-The `rating` field can contain an integer value between `0 - 4` or string values:
-- TERRIBLE
-- POOR
-- AVERAGE
-- GOOD
-- EXCELLENT
+</details>
 
-### Authentication Endpoint
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/review</b></code> <code>Review film</code></summary>
+
+  ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :-----------------------------------------------------  |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
+
+  ##### Parameters
+  | Name      | Type               | Description                        |
+  | :-------- | :----------------- | :--------------------------------- |
+  | `id`      | `string`           | **Required** Id of film to update. |
+  | `body`    | `application/json` | **Required** Film object to add.   |
+  
+  #### Body 
+  | Field    | Type     | Description                         |
+  | :------- | :------- | :---------------------------------- |
+  | `text`   | `string` | **Optional** Review text.           |
+  | `rating` | `integer/string`| **Required**  Rate the film. |
+
+  The `rating` field can contain an integer value between `0 - 4` or string values:
+  - TERRIBLE
+  - POOR
+  - AVERAGE
+  - GOOD
+  - EXCELLENT
+    
+  Example body:
+  ```json
+  {
+    "text": "Good film, I like.",
+    "rating": "EXCELLENT"
+  }
+  ```
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description              |
+  | :-------------  | :----------------  | :----------------------- |
+  | `200 OK`        | `nosniff`          | Successful operation     |
+  | `403 Forbidden` | `nosniff`          | Unauthorized             |
+  | `404 Not Found` | `applicatio/json`  | Film with `id` not found |
+
+</details>
+
+### Authentication Endpoints
 
 #### Sign Up
 
@@ -204,7 +307,7 @@ Example:
 | `username`   | `string` | **Required**. Username of an existing user. |
 | `password`    | `string`| **Required**. Password of an existing user. |
 
-### Users Endpoint
+### User Endpoints
 
 #### Retrieve a list of all users
 
