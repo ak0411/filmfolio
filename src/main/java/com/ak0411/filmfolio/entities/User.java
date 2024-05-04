@@ -1,7 +1,9 @@
 package com.ak0411.filmfolio.entities;
 
 import com.ak0411.filmfolio.enums.UserRole;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -47,7 +49,7 @@ public class User implements UserDetails {
 
     @JsonProperty("favorite_films")
     @JsonIgnoreProperties({"favorites", "reviews"})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_film",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")

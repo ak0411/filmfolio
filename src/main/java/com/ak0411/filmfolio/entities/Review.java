@@ -3,7 +3,10 @@ package com.ak0411.filmfolio.entities;
 import com.ak0411.filmfolio.enums.Rating;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter

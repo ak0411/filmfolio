@@ -16,13 +16,20 @@ class Error {
 }
 
 @ControllerAdvice
-class NotFoundExceptionHandler {
+class GlobalExceptionHandler {
 
     @ResponseBody
     @ExceptionHandler({FilmNotFoundException.class, UserNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     Error handleNotFound(RuntimeException ex) {
         return new Error(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler({AlreadyReviewedException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    Error handleAlreadyReviewed(RuntimeException ex) {
+        return new Error(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 }
 
