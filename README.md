@@ -34,9 +34,9 @@ Coded with Spring Boot, FilmFolio API is a RESTful web service designed to handl
   <summary><code>GET</code> <code><b>/api/v1/films</b></code> <code>Get all films</code></summary>
   
   #### Responses
-  | Http Status     | Content-Type       | Description              |
-  | :-------------- | :----------------  | :----------------------- |
-  | `200 OK`        | `application/json` | Successful operation     |
+  | Http Status     | Content-Type       | Description           |
+  | :-------------- | :----------------  | :-------------------- |
+  | `200 OK`        | `application/json` | Successful operation. |
 
 </details>
 
@@ -44,36 +44,124 @@ Coded with Spring Boot, FilmFolio API is a RESTful web service designed to handl
   <summary><code>GET</code> <code><b>/api/v1/films/{id}</b></code> <code>Get film by id</code></summary>
   
   ##### Parameters
-  | Name      | Type     | Description                        |
-  | :-------- | :------- | :--------------------------------  |
+  | Name      | Type     | Description                       |
+  | :-------- | :------- | :-------------------------------- |
   | `id`      | `string` | **Required** Id of film to fetch. |
   
   #### Responses
-  | Http Status     | Content-Type       | Description              |
-  | :-------------- | :----------------  | :----------------------- |
-  | `200 OK`        | `application/json` | Successful operation     |
-  | `404 Not Found` | `application/json` | Film with ´id´ not found |
+  | Http Status     | Content-Type       | Description               |
+  | :-------------- | :----------------  | :------------------------ |
+  | `200 OK`        | `application/json` | Successful operation.     |
+  | `404 Not Found` | `application/json` | Film with ´id´ not found. |
 </details>
 
 <details>
-  <summary><code>POST</code> <code><b>/api/v1/films</b></code> <code>Create film (Admin only)</code></summary>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/favorite</b></code> <code>Favorite film</code></summary>
+
+   ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :-----------------------------------------------------  |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
+
+  ##### Parameters
+  | Name      | Type     | Description                          |
+  | :-------- | :------- | :----------------------------------  |
+  | `id`      | `string` | **Required** Id of film to favorite. |
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description               |
+  | :-------------  | :----------------  | :------------------------ |
+  | `200 OK`        | `nosniff`          | Successful operation.     |
+  | `403 Forbidden` | `nosniff`          | Unauthorized operation.   |
+  | `404 Not Found` | `application/json` | Film with `id` not found. |
+
+</details>
+
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/unfavorite</b></code> <code>Unfavorite film</code></summary>
+
+   ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :-----------------------------------------------------  |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
+
+  ##### Parameters
+  | Name      | Type     | Description                            |
+  | :-------- | :------- | :------------------------------------  |
+  | `id`      | `string` | **Required** Id of film to unfavorite. |
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description               |
+  | :-------------  | :----------------  | :------------------------ |
+  | `200 OK`        | `nosniff`          | Successful operation.     |
+  | `403 Forbidden` | `nosniff`          | Unauthorized operation.   |
+  | `404 Not Found` | `application/json` | Film with `id` not found. |
+
+</details>
+
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/review</b></code> <code>Review film</code></summary>
 
   ##### Headers
   | Type            | Value            | Description                                             |
   | :-------------- | :--------------- | :-----------------------------------------------------  |
   | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
-  
+
   ##### Parameters
   | Name      | Type               | Description                        |
-  | :-------- | :----------------- | :--------------------------------  |
-  | `body`    | `application/json` | **Required** Film object to add    |
+  | :-------- | :----------------- | :--------------------------------- |
+  | `id`      | `string`           | **Required** Id of film to update. |
+  | `body`    | `application/json` | **Required** Film object to add.   |
+  
+  #### Body 
+  | Field    | Type     | Description                         |
+  | :------- | :------- | :---------------------------------- |
+  | `text`   | `string` | **Optional** Review text.           |
+  | `rating` | `integer/string`| **Required**  Rate the film. |
+
+  The `rating` field can contain an integer value between `0 - 4` or string values:
+  - TERRIBLE
+  - POOR
+  - AVERAGE
+  - GOOD
+  - EXCELLENT
+    
+  Example body:
+  ```json
+  {
+    "text": "Good film, I like.",
+    "rating": "EXCELLENT"
+  }
+  ```
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description               |
+  | :-------------  | :----------------  | :------------------------ |
+  | `200 OK`        | `nosniff`          | Successful operation.     |
+  | `403 Forbidden` | `nosniff`          | Unauthorized operation.   |
+  | `404 Not Found` | `application/json` | Film with `id` not found. |
+
+</details>
+
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/films</b></code> <code>Create film (Admin only)</code></summary>
+
+   ##### Headers
+  | Type            | Value            | Description                                             |
+  | :-------------- | :--------------- | :------------------------------------------------------ |
+  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
+  
+  ##### Parameters
+  | Name      | Type               | Description                      |
+  | :-------- | :----------------- | :------------------------------- |
+  | `body`    | `application/json` | **Required** Film object to add. |
 
   #### Body 
   | Field   | Type     | Description                     |
   | :------ | :------- | :------------------------------ |
   | `title` | `string` | **Required** Title of the film. |
   | `year`  | `integer`| **Required** Year of the film.  |
-  | `genre` | `array`  | Genre(s) of the film.           |
+  | `genre` | `array`  | Genre(s) of the film .          |
 
   The `genre` field can be `null`, or an array containing one or more of the following genre values:
   - ACTION
@@ -98,10 +186,10 @@ Coded with Spring Boot, FilmFolio API is a RESTful web service designed to handl
   ```
 
   #### Responses
-  | Http Status     | Content-Type       | Description                       |
-  | :-------------- | :----------------  | :-------------------------------- |
-  | `200 OK`        | `application/json` | Successful operation              |
-  | `403 Forbidden` | `application/json` | Unauthorized or malformed request |
+  | Http Status     | Content-Type       | Description                        |
+  | :-------------- | :----------------  | :--------------------------------- |
+  | `200 OK`        | `application/json` | Successful operation.              |
+  | `403 Forbidden` | `application/json` | Unauthorized or malformed request. |
 
 </details>
 
@@ -119,10 +207,10 @@ Coded with Spring Boot, FilmFolio API is a RESTful web service designed to handl
   | `id`      | `string` | **Required** Id of film to delete. |
   
   #### Responses
-  | Http Code       | Content-Type       | Description          |
-  | :-------------  | :----------------  | :------------------- |
-  | `200 OK`        | `application/json` | Successful operation |
-  | `403 Forbidden` | `nosniff`          | Unauthorized         |
+  | Http Code       | Content-Type       | Description             |
+  | :-------------  | :----------------  | :---------------------  |
+  | `200 OK`        | `application/json` | Successful operation.   |
+  | `403 Forbidden` | `nosniff`          | Unauthorized operation. |
 
 </details>
 
@@ -170,160 +258,106 @@ Coded with Spring Boot, FilmFolio API is a RESTful web service designed to handl
   ```
   
   #### Responses
-  | Http Code       | Content-Type       | Description          |
-  | :-------------  | :----------------  | :------------------- |
-  | `200 OK`        | `application/json` | Successful operation |
-  | `403 Forbidden` | `nosniff`          | Unauthorized         |
-
-</details>
-
-<details>
-  <summary><code>POST</code> <code><b>/api/v1/films/{id}/favorite</b></code> <code>Favorite film</code></summary>
-
-   ##### Headers
-  | Type            | Value            | Description                                             |
-  | :-------------- | :--------------- | :-----------------------------------------------------  |
-  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
-
-  ##### Parameters
-  | Name      | Type     | Description                        |
-  | :-------- | :------- | :--------------------------------  |
-  | `id`      | `string` | **Required** Id of film to favorite. |
-  
-  #### Responses
-  | Http Code       | Content-Type       | Description              |
-  | :-------------  | :----------------  | :----------------------- |
-  | `200 OK`        | `nosniff`          | Successful operation     |
-  | `403 Forbidden` | `nosniff`          | Unauthorized             |
-  | `404 Not Found` | `applicatio/json`  | Film with `id` not found |
-
-</details>
-
-<details>
-  <summary><code>POST</code> <code><b>/api/v1/films/{id}/unfavorite</b></code> <code>Unfavorite film</code></summary>
-
-   ##### Headers
-  | Type            | Value            | Description                                             |
-  | :-------------- | :--------------- | :-----------------------------------------------------  |
-  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
-
-  ##### Parameters
-  | Name      | Type     | Description                        |
-  | :-------- | :------- | :--------------------------------  |
-  | `id`      | `string` | **Required** Id of film to unfavorite. |
-  
-  #### Responses
-  | Http Code       | Content-Type       | Description              |
-  | :-------------  | :----------------  | :----------------------- |
-  | `200 OK`        | `nosniff`          | Successful operation     |
-  | `403 Forbidden` | `nosniff`          | Unauthorized             |
-  | `404 Not Found` | `applicatio/json`  | Film with `id` not found |
-
-</details>
-
-<details>
-  <summary><code>POST</code> <code><b>/api/v1/films/{id}/review</b></code> <code>Review film</code></summary>
-
-  ##### Headers
-  | Type            | Value            | Description                                             |
-  | :-------------- | :--------------- | :-----------------------------------------------------  |
-  | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
-
-  ##### Parameters
-  | Name      | Type               | Description                        |
-  | :-------- | :----------------- | :--------------------------------- |
-  | `id`      | `string`           | **Required** Id of film to update. |
-  | `body`    | `application/json` | **Required** Film object to add.   |
-  
-  #### Body 
-  | Field    | Type     | Description                         |
-  | :------- | :------- | :---------------------------------- |
-  | `text`   | `string` | **Optional** Review text.           |
-  | `rating` | `integer/string`| **Required**  Rate the film. |
-
-  The `rating` field can contain an integer value between `0 - 4` or string values:
-  - TERRIBLE
-  - POOR
-  - AVERAGE
-  - GOOD
-  - EXCELLENT
-    
-  Example body:
-  ```json
-  {
-    "text": "Good film, I like.",
-    "rating": "EXCELLENT"
-  }
-  ```
-  
-  #### Responses
-  | Http Code       | Content-Type       | Description              |
-  | :-------------  | :----------------  | :----------------------- |
-  | `200 OK`        | `nosniff`          | Successful operation     |
-  | `403 Forbidden` | `nosniff`          | Unauthorized             |
-  | `404 Not Found` | `applicatio/json`  | Film with `id` not found |
+  | Http Code       | Content-Type       | Description             |
+  | :-------------  | :----------------  | :---------------------- |
+  | `200 OK`        | `application/json` | Successful operation.   |
+  | `403 Forbidden` | `nosniff`          | Unauthorized operation. |
 
 </details>
 
 ### Authentication Endpoints
 
-#### Sign Up
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/auth/signup</b></code> <code>Sign up</code></summary>
 
-```http
-  POST /api/v1/auth/signup
-```
+  ##### Parameters
+  | Name      | Type               | Description                        |
+  | :-------- | :----------------- | :--------------------------------- |
+  | `body`    | `application/json` | **Required** Film object to add.   |
 
-Example:
-```json
-{
-  "name": "Bob Man",
-  "username": "bob",
-  "password": "bob123",
-  "role": "USER"
-}
-```
-| Field | Type     | Description                                |
-| :-------- | :------- | :------------------------------------  |
-| `name`   | `string` | **Optional**. Name of the account.      |
-| `username`   | `string` | **Required**. A unique username.    |
-| `password`    | `string`| **Required**. A password.           |
-| `role`   | `string`  | **Required**. Role of the account `ADMIN` or `USER`. |
+  #### Body 
+  | Field      | Type     | Description                                         |
+  | :--------- | :------- | :-------------------------------------------------  |
+  | `name`     | `string` | **Optional** Name of the account.                   |
+  | `username` | `string` | **Required** A unique username.                     |
+  | `password` | `string` | **Required** A password.                            |
+  | `role`     | `string` | **Required** Role of the account `ADMIN` or `USER`. |
 
-#### Sign In
+  Example body:
+  ```json
+  {
+    "name": "Bob Man",
+    "username": "bob",
+    "password": "bob123",
+    "role": "USER"
+  }
+  ```
+  
+  #### Responses
+  | Http Code       | Content-Type | Description                                 |
+  | :-------------  | :----------  | :-----------------------------------------  |
+  | `201 Created`   | `nosniff`    | Successful operation.                       |
+  | `403 Forbidden` | `nosniff`    | Malformated body or username already exist. |
 
-```http
-  POST /api/v1/auth/signin
-```
+</details>
 
-Example:
-```json
-{
-  "username": "bob",
-  "password": "bob123"
-}
-```
-| Field | Type     | Description                                |
-| :-------- | :------- | :------------------------------------  |
-| `username`   | `string` | **Required**. Username of an existing user. |
-| `password`    | `string`| **Required**. Password of an existing user. |
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/auth/signup</b></code> <code>Sign in</code></summary>
+
+  ##### Parameters
+  | Name      | Type               | Description                        |
+  | :-------- | :----------------- | :--------------------------------- |
+  | `body`    | `application/json` | **Required** Film object to add.   |
+
+  #### Body 
+  | Field      | Type     | Description                     |
+  | :--------- | :------- | :------------------------------ |
+  | `username` | `string` | **Required** A unique username. |
+  | `password` | `string` | **Required** A password.        |
+
+  Example body:
+  ```json
+  {
+    "username": "bob",
+    "password": "bob123"
+  }
+  ```
+  
+  #### Responses
+  | Http Code       | Content-Type       | Description                      |
+  | :-------------  | :----------------- | :------------------------------  |
+  | `200 OK`        | `application/json` | Successful operation.            |
+  | `403 Forbidden` | `nosniff`          | Unauthorized or malformated body |
+
+</details>
 
 ### User Endpoints
 
-#### Retrieve a list of all users
+<details>
+  <summary><code>GET</code> <code><b>/api/v1/users</b></code> <code>Get all users</code></summary>
+  
+  #### Responses
+  | Http Status     | Content-Type       | Description           |
+  | :-------------- | :----------------  | :-------------------- |
+  | `200 OK`        | `application/json` | Successful operation. |
 
-```http
-  GET /api/v1/users
-```
+</details>
 
-#### Retrieve a specific user
+<details>
+  <summary><code>GET</code> <code><b>/api/v1/users/{id}</b></code> <code>Get user by id</code></summary>
+  
+  ##### Parameters
+  | Name      | Type     | Description                       |
+  | :-------- | :------- | :-------------------------------- |
+  | `id`      | `string` | **Required** Id of user to fetch. |
+  
+  #### Responses
+  | Http Status     | Content-Type       | Description               |
+  | :-------------- | :----------------  | :------------------------ |
+  | `200 OK`        | `application/json` | Successful operation.     |
+  | `404 Not Found` | `application/json` | User with ´id´ not found. |
+</details>
 
-```http
-  GET /api/v1/users/${id}
-```
-
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `string` | **Required**. Id of user to fetch |
 
 ## Roadmap
 
