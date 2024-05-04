@@ -57,7 +57,6 @@ public class User implements UserDetails {
     private Set<Film> favoriteFilms;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference
     private List<Review> reviews;
 
     public User(String name, String username, String password, UserRole role) {

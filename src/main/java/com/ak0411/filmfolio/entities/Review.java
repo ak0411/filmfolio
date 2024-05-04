@@ -2,6 +2,7 @@ package com.ak0411.filmfolio.entities;
 
 import com.ak0411.filmfolio.enums.Rating;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,12 +27,12 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
+    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "film_id")
-    @JsonBackReference
+    @JsonIgnore
     private Film film;
 
     public Review(String text, Rating rating, User user, Film film) {

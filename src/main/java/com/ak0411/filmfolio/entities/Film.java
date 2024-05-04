@@ -37,7 +37,6 @@ public class Film {
     private Set<User> favoritedByUsers;
 
     @OneToMany(mappedBy = "film")
-    @JsonManagedReference
     private List<Review> reviews;
 
     public Film(String title, Integer year, Set<Genre> genre) {
