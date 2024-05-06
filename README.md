@@ -360,7 +360,9 @@ Coded with Spring Boot, FilmFolio API is a RESTful web service designed to handl
 
 
 ## Roadmap
-
+- [ ] Filtering by films by title, genre, year, favorites, and more.
+- [ ] Order by year, favorites, number of reviews, and more.
+- [ ] Friend/follower system.
 - [ ] Building a frontend application to consume the API and provide a user-friendly interface.
-- [ ] Enhancing user interaction features such as search, recommendations, and user profiles.
+
 
