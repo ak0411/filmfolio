@@ -1,8 +1,9 @@
 package com.ak0411.filmfolio.domain;
 
 import com.ak0411.filmfolio.enums.UserRole;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.ak0411.filmfolio.views.Views;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,25 +20,19 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@JsonIgnoreProperties({
-        "password",
-        "role",
-        "enabled",
-        "credentialsNonExpired",
-        "accountNonExpired",
-        "authorities",
-        "accountNonLocked"
-})
 @Builder
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JsonView({Views.User.class, Views.FilmExtended.class})
     private UUID id;
 
     @Column(length = 100)
+    @JsonView(Views.User.class)
     private String name;
 
     @Column(unique = true, nullable = false, updatable = false, length = 20)
+    @JsonView({Views.User.class, Views.Film.class})
     private String username;
 
     @Column(nullable = false)
@@ -46,16 +41,17 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @JsonProperty("favorite_films")
-    @JsonIgnoreProperties({"favorites", "reviews"})
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_film",
             joinColumns = @JoinColumn(name = "film_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @JsonProperty("favorite_films")
+    @JsonView(Views.User.class)
     private Set<Film> favoriteFilms;
 
     @OneToMany(mappedBy = "user")
+    @JsonView(Views.User.class)
     private List<Review> reviews;
 
     public User(String name, String username, String password, UserRole role) {

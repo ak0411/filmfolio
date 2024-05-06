@@ -1,7 +1,9 @@
 package com.ak0411.filmfolio.controllers;
 
 import com.ak0411.filmfolio.domain.User;
-import com.ak0411.filmfolio.repositories.services.UserService;
+import com.ak0411.filmfolio.services.UserService;
+import com.ak0411.filmfolio.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,11 +22,13 @@ class UserController {
     }
 
     @GetMapping
+    @JsonView(Views.User.class)
     List<User> readAll() {
         return userService.readAll();
     }
 
     @GetMapping("/{id}")
+    @JsonView(Views.UserExtended.class)
     User readOne(@PathVariable UUID id) {
         return userService.readOne(id);
     }

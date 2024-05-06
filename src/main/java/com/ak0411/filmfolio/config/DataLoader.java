@@ -1,12 +1,11 @@
-package com.ak0411.filmfolio;
+package com.ak0411.filmfolio.config;
 
 import com.ak0411.filmfolio.domain.Film;
 import com.ak0411.filmfolio.dtos.SignUpDto;
 import com.ak0411.filmfolio.enums.Genre;
 import com.ak0411.filmfolio.enums.UserRole;
 import com.ak0411.filmfolio.repositories.FilmRepository;
-import com.ak0411.filmfolio.repositories.services.AuthService;
-import com.ak0411.filmfolio.repositories.services.FilmService;
+import com.ak0411.filmfolio.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -20,9 +19,9 @@ import java.util.Set;
 public class DataLoader implements ApplicationRunner {
 
     private final List<Film> initialFilms = new ArrayList<Film>() {{
-        add(new Film("tt0440803","Shutter", 2004, Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)));
-        add(new Film("tt0930083","Noroi", 2005, Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)));
-        add(new Film("tt8119752","Gonjiam: Haunted Asylum", 2018, Set.of(Genre.HORROR)));
+        add(new Film("tt0440803", "Shutter", 2004, Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)));
+        add(new Film("tt0930083", "Noroi", 2005, Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)));
+        add(new Film("tt8119752", "Gonjiam: Haunted Asylum", 2018, Set.of(Genre.HORROR)));
     }};
     private final List<SignUpDto> initialUsers = new ArrayList<SignUpDto>() {{
         add(new SignUpDto(null, "admin", "password", UserRole.ADMIN));

@@ -1,9 +1,9 @@
-package com.ak0411.filmfolio.repositories.services;
+package com.ak0411.filmfolio.services;
 
-import com.ak0411.filmfolio.dtos.ReviewDto;
 import com.ak0411.filmfolio.domain.Film;
 import com.ak0411.filmfolio.domain.Review;
 import com.ak0411.filmfolio.domain.User;
+import com.ak0411.filmfolio.dtos.ReviewDto;
 import com.ak0411.filmfolio.exceptions.AlreadyReviewedException;
 import com.ak0411.filmfolio.exceptions.FilmNotFoundException;
 import com.ak0411.filmfolio.repositories.FilmRepository;

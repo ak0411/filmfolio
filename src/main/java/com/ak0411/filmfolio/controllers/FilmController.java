@@ -1,9 +1,11 @@
 package com.ak0411.filmfolio.controllers;
 
-import com.ak0411.filmfolio.dtos.ReviewDto;
 import com.ak0411.filmfolio.domain.Film;
 import com.ak0411.filmfolio.domain.User;
-import com.ak0411.filmfolio.repositories.services.FilmService;
+import com.ak0411.filmfolio.dtos.ReviewDto;
+import com.ak0411.filmfolio.services.FilmService;
+import com.ak0411.filmfolio.views.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,17 +22,21 @@ class FilmController {
     }
 
     @GetMapping
+    @JsonView(Views.Film.class)
     List<Film> readAll() {
         return filmService.readAll();
     }
 
     @GetMapping("/{id}")
+    @JsonView(Views.FilmExtended.class)
     Film readOne(@PathVariable String id) {
         return filmService.readOne(id);
     }
 
     @PostMapping
-    Film create(@RequestBody Film request) { return filmService.create(request); }
+    Film create(@RequestBody Film request) {
+        return filmService.create(request);
+    }
 
     @PostMapping("/{id}/favorite")
     void favorite(@PathVariable String id) {

@@ -1,4 +1,4 @@
-package com.ak0411.filmfolio.repositories.services;
+package com.ak0411.filmfolio.services;
 
 import com.ak0411.filmfolio.domain.User;
 import com.ak0411.filmfolio.exceptions.UserNotFoundException;
