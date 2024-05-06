@@ -1,4 +1,4 @@
-package com.ak0411.filmfolio.domain;
+package com.ak0411.filmfolio.domain.entities;
 
 import com.ak0411.filmfolio.enums.Genre;
 import com.ak0411.filmfolio.views.Views;

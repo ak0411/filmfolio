@@ -1,4 +1,4 @@
-package com.ak0411.filmfolio.dtos;
+package com.ak0411.filmfolio.domain.dtos;
 
 import com.ak0411.filmfolio.enums.UserRole;
 

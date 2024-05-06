@@ -1,7 +1,7 @@
 package com.ak0411.filmfolio.config;
 
-import com.ak0411.filmfolio.domain.Film;
-import com.ak0411.filmfolio.dtos.SignUpDto;
+import com.ak0411.filmfolio.domain.dtos.SignUpDto;
+import com.ak0411.filmfolio.domain.entities.Film;
 import com.ak0411.filmfolio.enums.Genre;
 import com.ak0411.filmfolio.enums.UserRole;
 import com.ak0411.filmfolio.repositories.FilmRepository;

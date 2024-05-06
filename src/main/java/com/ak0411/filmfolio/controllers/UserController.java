@@ -1,6 +1,6 @@
 package com.ak0411.filmfolio.controllers;
 
-import com.ak0411.filmfolio.domain.User;
+import com.ak0411.filmfolio.domain.entities.User;
 import com.ak0411.filmfolio.services.UserService;
 import com.ak0411.filmfolio.views.Views;
 import com.fasterxml.jackson.annotation.JsonView;
