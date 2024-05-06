@@ -1,7 +1,7 @@
 package com.ak0411.filmfolio;
 
-import com.ak0411.filmfolio.entities.Film;
-import com.ak0411.filmfolio.entities.User;
+import com.ak0411.filmfolio.domain.Film;
+import com.ak0411.filmfolio.domain.User;
 import com.ak0411.filmfolio.enums.Genre;
 import com.ak0411.filmfolio.enums.UserRole;
 

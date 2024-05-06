@@ -1,7 +1,6 @@
-package com.ak0411.filmfolio.entities;
+package com.ak0411.filmfolio.domain;
 
 import com.ak0411.filmfolio.enums.Rating;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

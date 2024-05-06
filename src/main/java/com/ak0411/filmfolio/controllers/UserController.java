@@ -1,7 +1,7 @@
 package com.ak0411.filmfolio.controllers;
 
-import com.ak0411.filmfolio.entities.User;
-import com.ak0411.filmfolio.services.UserService;
+import com.ak0411.filmfolio.domain.User;
+import com.ak0411.filmfolio.repositories.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

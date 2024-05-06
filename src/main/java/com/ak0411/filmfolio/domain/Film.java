@@ -1,8 +1,7 @@
-package com.ak0411.filmfolio.entities;
+package com.ak0411.filmfolio.domain;
 
 import com.ak0411.filmfolio.enums.Genre;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,8 +17,7 @@ import java.util.Set;
 @EqualsAndHashCode(of = "id")
 public class Film {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable = false, length = 50)
     private String title;
@@ -39,10 +37,15 @@ public class Film {
     @OneToMany(mappedBy = "film")
     private List<Review> reviews;
 
-    public Film(String title, Integer year, Set<Genre> genre) {
+    public Film(String id, String title, Integer year, Set<Genre> genre) {
+        this.id = id;
         this.title = title;
         this.year = year;
         this.genre = genre;
+    }
+
+    public Film(String title, Integer year, Set<Genre> genre) {
+        this(null, title, year, genre);
     }
 
     public int getNumberOfFavorites() {

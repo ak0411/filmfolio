@@ -1,8 +1,7 @@
-package com.ak0411.filmfolio.entities;
+package com.ak0411.filmfolio.domain;
 
 import com.ak0411.filmfolio.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;

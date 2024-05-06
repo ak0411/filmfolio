@@ -1,7 +1,7 @@
-package com.ak0411.filmfolio.services;
+package com.ak0411.filmfolio.repositories.services;
 
 import com.ak0411.filmfolio.dtos.SignUpDto;
-import com.ak0411.filmfolio.entities.User;
+import com.ak0411.filmfolio.domain.User;
 import com.ak0411.filmfolio.exceptions.InvalidJwtException;
 import com.ak0411.filmfolio.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
