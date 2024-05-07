@@ -19,9 +19,9 @@ import java.util.Set;
 public class DataLoader implements ApplicationRunner {
 
     private final List<Film> initialFilms = new ArrayList<Film>() {{
-        add(new Film("tt0440803", "Shutter", 2004, Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)));
-        add(new Film("tt0930083", "Noroi", 2005, Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)));
-        add(new Film("tt8119752", "Gonjiam: Haunted Asylum", 2018, Set.of(Genre.HORROR)));
+        add(Film.builder().id("tt0440803").title("Shutter").year(2004).genre(Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)).build());
+        add(Film.builder().id("tt0930083").title("Noroi").year(2005).genre(Set.of(Genre.HORROR, Genre.THRILLER, Genre.MYSTERY)).build());
+        add(Film.builder().id("tt8119752").title("Gonjiam: Haunted Asylum").year(2018).genre(Set.of(Genre.HORROR)).build());
     }};
     private final List<SignUpDto> initialUsers = new ArrayList<SignUpDto>() {{
         add(new SignUpDto(null, "admin", "password", UserRole.ADMIN));

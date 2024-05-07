@@ -1,11 +1,18 @@
 package com.ak0411.filmfolio.controllers;
 
+import com.ak0411.filmfolio.domain.dtos.FilmDto;
+import com.ak0411.filmfolio.domain.dtos.NewFilmDto;
 import com.ak0411.filmfolio.domain.dtos.ReviewDto;
 import com.ak0411.filmfolio.domain.entities.Film;
+import com.ak0411.filmfolio.domain.entities.Review;
 import com.ak0411.filmfolio.domain.entities.User;
+import com.ak0411.filmfolio.mappers.Mapper;
 import com.ak0411.filmfolio.services.FilmService;
 import com.ak0411.filmfolio.views.Views;
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,49 +23,80 @@ import java.util.List;
 class FilmController {
 
     private final FilmService filmService;
+    private final Mapper<Film, FilmDto> filmMapper;
 
-    FilmController(FilmService filmService) {
+    FilmController(FilmService filmService, Mapper<Film, FilmDto> filmMapper) {
         this.filmService = filmService;
+        this.filmMapper = filmMapper;
     }
 
     @GetMapping
     @JsonView(Views.Film.class)
-    List<Film> readAll() {
-        return filmService.readAll();
+    List<FilmDto> readAll() {
+        List<Film> films = filmService.readAll();
+        return filmMapper.mapAll(films);
     }
 
     @GetMapping("/{id}")
     @JsonView(Views.FilmExtended.class)
-    Film readOne(@PathVariable String id) {
-        return filmService.readOne(id);
+    FilmDto readOne(@PathVariable String id) {
+        Film film = filmService.readOne(id);
+        return filmMapper.mapTo(film);
     }
 
+
     @PostMapping
-    Film create(@RequestBody Film request) {
-        return filmService.create(request);
+    ResponseEntity<FilmDto> create(@Valid @RequestBody NewFilmDto request) {
+
+        Film film = Film.builder()
+                .id(request.id())
+                .title(request.title())
+                .year(request.year())
+                .genre(request.genre())
+                .build();
+        filmService.create(film);
+
+        FilmDto filmDto = filmMapper.mapTo(film);
+        return new ResponseEntity<FilmDto>(filmDto, HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/favorite")
-    void favorite(@PathVariable String id) {
+    ResponseEntity<String> favorite(@PathVariable String id) {
         filmService.favorite(id);
+        return new ResponseEntity<>("film favorited!", HttpStatus.OK);
     }
 
     @PostMapping("/{id}/unfavorite")
-    void unfavorite(@PathVariable String id) {
+    ResponseEntity<String> unfavorite(@PathVariable String id) {
         filmService.unfavorite(id);
+        return new ResponseEntity<>("film unfavorited", HttpStatus.OK);
     }
 
     @PostMapping("/{id}/review")
-    void createReview(
-            @PathVariable String id,
-            @RequestBody ReviewDto request
-    ) {
-        filmService.createReview(id, request);
+    ResponseEntity<ReviewDto> createReview(@PathVariable String id, @RequestBody ReviewDto request) {
+        Review review = filmService.createReview(id, request);
+        ReviewDto response = ReviewDto.builder()
+                .id(review.getId())
+                .text(review.getText())
+                .rating(review.getRating())
+                .build();
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
+    // TODO: Use another DTO instead of NewFilmDto
     @PutMapping("/{id}")
-    Film update(@PathVariable String id, @RequestBody Film request) {
-        return filmService.update(id, request);
+    ResponseEntity<FilmDto> update(@PathVariable String id, @Valid @RequestBody NewFilmDto request) {
+        Film filmToUpdate = Film.builder()
+                .title(request.title())
+                .year(request.year())
+                .genre(request.genre())
+                .build();
+
+        Film film = filmService.update(id, filmToUpdate);
+        FilmDto response = filmMapper.mapTo(film);
+
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")

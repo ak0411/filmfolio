@@ -2,7 +2,6 @@ package com.ak0411.filmfolio.services.impl;
 
 import com.ak0411.filmfolio.domain.entities.User;
 import com.ak0411.filmfolio.exceptions.UserNotFoundException;
-import com.ak0411.filmfolio.mappers.impl.UserMapperImpl;
 import com.ak0411.filmfolio.repositories.UserRepository;
 import com.ak0411.filmfolio.services.UserService;
 import org.springframework.stereotype.Service;

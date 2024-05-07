@@ -5,15 +5,15 @@ import com.ak0411.filmfolio.views.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Review {
 
     @Id
@@ -37,12 +37,5 @@ public class Review {
     @JoinColumn(name = "film_id")
     @JsonView(Views.User.class)
     private Film film;
-
-    public Review(String text, Rating rating, User user, Film film) {
-        this.text = text;
-        this.rating = rating;
-        this.user = user;
-        this.film = film;
-    }
 }
 

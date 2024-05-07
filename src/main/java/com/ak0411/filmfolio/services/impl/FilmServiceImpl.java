@@ -5,6 +5,7 @@ import com.ak0411.filmfolio.domain.entities.Film;
 import com.ak0411.filmfolio.domain.entities.Review;
 import com.ak0411.filmfolio.domain.entities.User;
 import com.ak0411.filmfolio.exceptions.AlreadyReviewedException;
+import com.ak0411.filmfolio.exceptions.FilmAlreadyExistsException;
 import com.ak0411.filmfolio.exceptions.FilmNotFoundException;
 import com.ak0411.filmfolio.repositories.FilmRepository;
 import com.ak0411.filmfolio.repositories.ReviewRepository;
@@ -37,6 +38,10 @@ public class FilmServiceImpl implements FilmService {
     }
 
     public Film create(Film film) {
+        String filmId = film.getId();
+        if (filmRepository.existsById(filmId)) {
+            throw new FilmAlreadyExistsException(filmId);
+        }
         return filmRepository.save(film);
     }
 
@@ -62,7 +67,7 @@ public class FilmServiceImpl implements FilmService {
         userRepository.save(currentUser);
     }
 
-    public void createReview(String id, ReviewDto reviewDto) {
+    public Review createReview(String id, ReviewDto reviewDto) {
         User currentUser = getCurrentUser();
 
         Film film = filmRepository.findById(id)
@@ -72,9 +77,14 @@ public class FilmServiceImpl implements FilmService {
             throw new AlreadyReviewedException();
         }
 
-        Review review = new Review(reviewDto.text(), reviewDto.rating(), currentUser, film);
+        Review review = Review.builder()
+                .text(reviewDto.getText())
+                .rating(reviewDto.getRating())
+                .user(currentUser)
+                .film(film)
+                .build();
 
-        reviewRepository.save(review);
+        return reviewRepository.save(review);
     }
 
     public Film update(String id, Film updatedFilm) {

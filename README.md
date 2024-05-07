@@ -152,7 +152,7 @@ Example body:
 
 | Http Code       | Content-Type       | Description               |
   |:----------------|:-------------------|:--------------------------|
-| `200 OK`        | `nosniff`          | Successful operation.     |
+| `201 Created`   | `nosniff`          | Successful operation.     |
 | `403 Forbidden` | `nosniff`          | Unauthorized operation.   |
 | `404 Not Found` | `application/json` | Film with `id` not found. |
 
@@ -212,7 +212,7 @@ Example body:
 
 | Http Status     | Content-Type       | Description                        |
   |:----------------|:-------------------|:-----------------------------------|
-| `200 OK`        | `application/json` | Successful operation.              |
+| `201 Created`   | `application/json` | Successful operation.              |
 | `403 Forbidden` | `application/json` | Unauthorized or malformed request. |
 
 </details>
