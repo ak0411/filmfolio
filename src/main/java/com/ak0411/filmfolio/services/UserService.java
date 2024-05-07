@@ -1,5 +1,6 @@
 package com.ak0411.filmfolio.services;
 
+import com.ak0411.filmfolio.domain.dtos.UserDto;
 import com.ak0411.filmfolio.domain.entities.User;
 
 import java.util.List;
