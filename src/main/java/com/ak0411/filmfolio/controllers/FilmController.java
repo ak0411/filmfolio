@@ -73,7 +73,6 @@ class FilmController {
         return new ResponseEntity<>("film unfavorited", HttpStatus.OK);
     }
 
-    // TODO: Review mapper instead of using build, but i wanted to try different approach
     @PostMapping("/{id}/review")
     ResponseEntity<ReviewDto> createReview(@PathVariable String id, @RequestBody ReviewDto request) {
         Review review = filmService.createReview(id, request);
