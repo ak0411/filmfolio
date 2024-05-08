@@ -87,17 +87,19 @@ public class FilmServiceImpl implements FilmService {
         return reviewRepository.save(review);
     }
 
-    public Film update(String id, Film updatedFilm) {
-        return filmRepository.findById(id)
+    /* TODO: add an appropriate error message when id is malformed instead of
+        "500 Internal Server Error: Could not commit JPA transaction" */
+    public Film update(Film filmToUpdate) {
+        return filmRepository.findById(filmToUpdate.getId())
                 .map(film -> {
-                    film.setTitle(updatedFilm.getTitle());
-                    film.setYear(updatedFilm.getYear());
-                    film.setGenre(updatedFilm.getGenre());
+                    film.setTitle(filmToUpdate.getTitle());
+                    film.setYear(filmToUpdate.getYear());
+                    film.setGenre(filmToUpdate.getGenre());
                     return filmRepository.save(film);
                 })
                 .orElseGet(() -> {
-                    updatedFilm.setId(id);
-                    return filmRepository.save(updatedFilm);
+                    filmToUpdate.setId(filmToUpdate.getId());
+                    return filmRepository.save(filmToUpdate);
                 });
     }
 

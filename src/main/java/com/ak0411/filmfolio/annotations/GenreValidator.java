@@ -1,6 +1,6 @@
 package com.ak0411.filmfolio.annotations;
 
-import com.ak0411.filmfolio.annotations.impl.EnumValidatorImpl;
+import com.ak0411.filmfolio.annotations.impl.GenreValidatorImpl;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import jakarta.validation.ReportAsSingleViolation;
@@ -9,12 +9,12 @@ import jakarta.validation.constraints.NotNull;
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = EnumValidatorImpl.class)
+@Constraint(validatedBy = GenreValidatorImpl.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 @NotNull(message = "Value cannot be null")
 @ReportAsSingleViolation
-public @interface EnumValidator {
+public @interface GenreValidator {
 
     Class<? extends Enum<?>> enumClass();
 
@@ -23,5 +23,4 @@ public @interface EnumValidator {
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-
 }

@@ -20,7 +20,7 @@ public interface FilmService {
 
     Review createReview(String id, ReviewDto reviewDto);
 
-    Film update(String id, Film updatedFilm);
+    Film update(Film updatedFilm);
 
     void remove(String imdbId);
 }
