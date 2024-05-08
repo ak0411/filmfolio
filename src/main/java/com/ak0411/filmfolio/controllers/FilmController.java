@@ -1,6 +1,9 @@
 package com.ak0411.filmfolio.controllers;
 
-import com.ak0411.filmfolio.domain.dtos.*;
+import com.ak0411.filmfolio.domain.dtos.FilmDto;
+import com.ak0411.filmfolio.domain.dtos.NewFilmDto;
+import com.ak0411.filmfolio.domain.dtos.ReviewDto;
+import com.ak0411.filmfolio.domain.dtos.UpdateFilmDto;
 import com.ak0411.filmfolio.domain.entities.Film;
 import com.ak0411.filmfolio.domain.entities.Review;
 import com.ak0411.filmfolio.domain.entities.User;
@@ -70,6 +73,7 @@ class FilmController {
         return new ResponseEntity<>("film unfavorited", HttpStatus.OK);
     }
 
+    // TODO: Review mapper instead of using build, but i wanted to try different approach
     @PostMapping("/{id}/review")
     ResponseEntity<ReviewDto> createReview(@PathVariable String id, @RequestBody ReviewDto request) {
         Review review = filmService.createReview(id, request);

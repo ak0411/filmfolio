@@ -1,24 +1,22 @@
 package com.ak0411.filmfolio.annotations;
 
+import com.ak0411.filmfolio.annotations.impl.EnumValidatorImpl;
 import com.ak0411.filmfolio.annotations.impl.GenreValidatorImpl;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.ReportAsSingleViolation;
 import jakarta.validation.constraints.NotNull;
 
 import java.lang.annotation.*;
 
 @Documented
-@Constraint(validatedBy = GenreValidatorImpl.class)
+@Constraint(validatedBy = {EnumValidatorImpl.class, GenreValidatorImpl.class})
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@NotNull(message = "Value cannot be null")
-@ReportAsSingleViolation
-public @interface GenreValidator {
-
+@NotNull
+public @interface EnumValidator {
     Class<? extends Enum<?>> enumClass();
 
-    String message() default "Value is not valid";
+    String message() default "must be any of enum {enumClass}";
 
     Class<?>[] groups() default {};
 

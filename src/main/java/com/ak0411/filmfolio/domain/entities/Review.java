@@ -38,4 +38,3 @@ public class Review {
     @JsonView(Views.User.class)
     private Film film;
 }
-

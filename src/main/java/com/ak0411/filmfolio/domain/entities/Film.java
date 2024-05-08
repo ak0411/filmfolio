@@ -1,6 +1,6 @@
 package com.ak0411.filmfolio.domain.entities;
 
-import com.ak0411.filmfolio.annotations.GenreValidator;
+import com.ak0411.filmfolio.annotations.EnumValidator;
 import com.ak0411.filmfolio.annotations.YearValidator;
 import com.ak0411.filmfolio.enums.Genre;
 import jakarta.persistence.*;
@@ -29,7 +29,7 @@ public class Film {
     @YearValidator
     private Integer year;
 
-    @GenreValidator(enumClass = Genre.class)
+    @EnumValidator(enumClass = Genre.class)
     private Set<Genre> genre;
 
     private int numberOfFavorites;

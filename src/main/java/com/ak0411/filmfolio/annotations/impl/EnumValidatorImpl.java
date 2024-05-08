@@ -1,7 +1,6 @@
 package com.ak0411.filmfolio.annotations.impl;
 
 import com.ak0411.filmfolio.annotations.EnumValidator;
-import com.ak0411.filmfolio.enums.Genre;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -9,7 +8,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class GenreValidatorImpl implements ConstraintValidator<EnumValidator, Set<Genre>> {
+public class EnumValidatorImpl implements ConstraintValidator<EnumValidator, String> {
 
     Set<String> values;
 
@@ -21,15 +20,9 @@ public class GenreValidatorImpl implements ConstraintValidator<EnumValidator, Se
     }
 
     @Override
-    public boolean isValid(Set<Genre> genres, ConstraintValidatorContext constraintValidatorContext) {
-        if (genres == null) return true;
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        if (value == null) return true;
 
-        for (Genre genre : genres) {
-            if (!values.contains(genre.toString().toUpperCase())) {
-                return false;
-            }
-        }
-        return true;
+        return values.contains(value);
     }
-
 }
