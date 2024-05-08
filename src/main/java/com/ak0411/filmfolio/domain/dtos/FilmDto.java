@@ -27,10 +27,10 @@ public class FilmDto {
     @JsonView({Views.User.class, Views.Film.class})
     private String title;
 
-    @JsonView({Views.UserExtended.class, Views.FilmExtended.class})
+    @JsonView({Views.UserExtended.class, Views.Film.class})
     private Integer year;
 
-    @JsonView({Views.UserExtended.class, Views.FilmExtended.class})
+    @JsonView({Views.UserExtended.class, Views.Film.class})
     private Set<Genre> genre;
 
     @JsonProperty("favorites")

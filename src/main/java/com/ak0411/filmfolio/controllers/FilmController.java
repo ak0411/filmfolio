@@ -3,6 +3,7 @@ package com.ak0411.filmfolio.controllers;
 import com.ak0411.filmfolio.domain.dtos.FilmDto;
 import com.ak0411.filmfolio.domain.dtos.NewFilmDto;
 import com.ak0411.filmfolio.domain.dtos.ReviewDto;
+import com.ak0411.filmfolio.domain.dtos.UpdateFilmDto;
 import com.ak0411.filmfolio.domain.entities.Film;
 import com.ak0411.filmfolio.domain.entities.Review;
 import com.ak0411.filmfolio.domain.entities.User;
@@ -84,9 +85,8 @@ class FilmController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    // TODO: Use another DTO instead of NewFilmDto
     @PutMapping("/{id}")
-    ResponseEntity<FilmDto> update(@PathVariable String id, @Valid @RequestBody NewFilmDto request) {
+    ResponseEntity<FilmDto> update(@PathVariable String id, @Valid @RequestBody UpdateFilmDto request) {
         Film filmToUpdate = Film.builder()
                 .title(request.title())
                 .year(request.year())

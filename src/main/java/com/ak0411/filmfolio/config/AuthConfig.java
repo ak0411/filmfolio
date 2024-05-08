@@ -33,8 +33,8 @@ public class AuthConfig {
                         .requestMatchers(HttpMethod.GET, "/api/v1/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/*").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/films").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/films").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/films").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/films/*").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/films/*").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
