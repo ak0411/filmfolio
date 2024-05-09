@@ -21,6 +21,6 @@ security:
     token:
       secret-key: ${JWT_SECRET}
 
-logging:
-  level:
-    ROOT: DEBUG
+#logging:
+#  level:
+#    ROOT: DEBUG

@@ -1,6 +1,5 @@
 package com.ak0411.filmfolio.services.impl;
 
-import com.ak0411.filmfolio.domain.dtos.ReviewDto;
 import com.ak0411.filmfolio.domain.entities.Film;
 import com.ak0411.filmfolio.domain.entities.Review;
 import com.ak0411.filmfolio.domain.entities.User;
@@ -67,7 +66,7 @@ public class FilmServiceImpl implements FilmService {
         userRepository.save(currentUser);
     }
 
-    public Review createReview(String id, ReviewDto reviewDto) {
+    public Review createReview(String id, Review newReview) {
         User currentUser = getCurrentUser();
 
         Film film = filmRepository.findById(id)
@@ -78,8 +77,8 @@ public class FilmServiceImpl implements FilmService {
         }
 
         Review review = Review.builder()
-                .text(reviewDto.getText())
-                .rating(reviewDto.getRating())
+                .text(newReview.getText())
+                .rating(newReview.getRating())
                 .user(currentUser)
                 .film(film)
                 .build();
@@ -87,24 +86,22 @@ public class FilmServiceImpl implements FilmService {
         return reviewRepository.save(review);
     }
 
-    /* TODO: add an appropriate error message when id is malformed instead of
-        "500 Internal Server Error: Could not commit JPA transaction" */
-    public Film update(Film filmToUpdate) {
-        return filmRepository.findById(filmToUpdate.getId())
+    public Film update(Film updateFilm) {
+        return filmRepository.findById(updateFilm.getId())
                 .map(film -> {
-                    film.setTitle(filmToUpdate.getTitle());
-                    film.setYear(filmToUpdate.getYear());
-                    film.setGenre(filmToUpdate.getGenre());
+                    film.setTitle(updateFilm.getTitle());
+                    film.setYear(updateFilm.getYear());
+                    film.setGenre(updateFilm.getGenre());
                     return filmRepository.save(film);
                 })
                 .orElseGet(() -> {
-                    filmToUpdate.setId(filmToUpdate.getId());
-                    return filmRepository.save(filmToUpdate);
+                    updateFilm.setId(updateFilm.getId());
+                    return filmRepository.save(updateFilm);
                 });
     }
 
-    public void remove(String imdbId) {
-        filmRepository.deleteById(imdbId);
+    public void deleteFilm(String id) {
+        filmRepository.deleteById(id);
     }
 
     private User getCurrentUser() {

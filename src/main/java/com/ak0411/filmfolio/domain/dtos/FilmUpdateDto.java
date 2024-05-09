@@ -8,8 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
-public record UpdateFilmDto(
-
+public record FilmUpdateDto(
         @NotBlank(message = "Film title cannot be empty")
         String title,
 

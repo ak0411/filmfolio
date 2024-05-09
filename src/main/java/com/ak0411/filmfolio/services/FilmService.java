@@ -1,6 +1,5 @@
 package com.ak0411.filmfolio.services;
 
-import com.ak0411.filmfolio.domain.dtos.ReviewDto;
 import com.ak0411.filmfolio.domain.entities.Film;
 import com.ak0411.filmfolio.domain.entities.Review;
 
@@ -18,9 +17,9 @@ public interface FilmService {
 
     void unfavorite(String id);
 
-    Review createReview(String id, ReviewDto reviewDto);
+    Review createReview(String id, Review newReview);
 
     Film update(Film updatedFilm);
 
-    void remove(String imdbId);
+    void deleteFilm(String imdbId);
 }

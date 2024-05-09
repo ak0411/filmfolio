@@ -9,8 +9,7 @@ import jakarta.validation.constraints.Pattern;
 
 import java.util.Set;
 
-public record NewFilmDto(
-
+public record FilmCreateDto(
         @Pattern(regexp = "tt\\d{7}", message = "Film id should follow the imdbId format")
         String id,
 

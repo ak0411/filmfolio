@@ -18,7 +18,6 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(Views.UserExtended.class)
     private Long id;
 
     @JsonView({Views.User.class, Views.Film.class})
