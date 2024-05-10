@@ -1,8 +1,8 @@
 package com.ak0411.filmfolio.domain.entities;
 
 import com.ak0411.filmfolio.enums.UserRole;
-import com.ak0411.filmfolio.views.Views;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "users")
@@ -20,18 +19,16 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Builder
+@JsonIncludeProperties({"id", "name", "username", "favoriteFilms", "reviews"})
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @JsonView({Views.User.class, Views.FilmExtended.class})
     private UUID id;
 
     @Column(length = 100)
-    @JsonView(Views.User.class)
     private String name;
 
     @Column(unique = true, nullable = false, updatable = false, length = 20)
-    @JsonView({Views.User.class, Views.Film.class})
     private String username;
 
     @Column(nullable = false)
@@ -46,11 +43,12 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "film_id")
     )
-    @JsonView(Views.User.class)
-    private Set<Film> favoriteFilms;
+    @JsonIncludeProperties({"title", "year", "genre", "imdb_id"})
+    private List<Film> favoriteFilms;
 
     @OneToMany(mappedBy = "user")
-    @JsonView(Views.User.class)
+    @JsonIncludeProperties({"text", "rating", "film"})
+    @JsonManagedReference
     private List<Review> reviews;
 
     public User(String name, String username, String password, UserRole role) {

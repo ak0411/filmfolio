@@ -1,8 +1,9 @@
 package com.ak0411.filmfolio.domain.entities;
 
 import com.ak0411.filmfolio.enums.Rating;
-import com.ak0411.filmfolio.views.Views;
-import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,25 +16,24 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
-    @JsonView({Views.User.class, Views.Film.class})
     private String text;
 
     @Column(nullable = false)
-    @JsonView({Views.User.class, Views.Film.class})
+    @Enumerated
     private Rating rating;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonView(Views.FilmExtended.class)
+    @JsonBackReference
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "film_id")
-    @JsonView(Views.User.class)
+    @JsonIgnoreProperties({"reviews", "favorites"})
     private Film film;
 }

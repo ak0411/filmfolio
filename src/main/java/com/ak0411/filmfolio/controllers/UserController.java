@@ -2,8 +2,6 @@ package com.ak0411.filmfolio.controllers;
 
 import com.ak0411.filmfolio.domain.entities.User;
 import com.ak0411.filmfolio.services.UserService;
-import com.ak0411.filmfolio.views.Views;
-import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,14 +21,12 @@ class UserController {
     }
 
     @GetMapping
-    @JsonView(Views.User.class)
     ResponseEntity<List<User>> readAll() {
         List<User> response = userService.readAll();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    @JsonView(Views.UserExtended.class)
     ResponseEntity<User> readOne(@PathVariable UUID id) {
         User response = userService.readOne(id);
         return ResponseEntity.ok(response);

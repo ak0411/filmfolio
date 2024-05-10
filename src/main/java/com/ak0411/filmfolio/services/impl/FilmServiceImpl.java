@@ -10,10 +10,14 @@ import com.ak0411.filmfolio.repositories.FilmRepository;
 import com.ak0411.filmfolio.repositories.ReviewRepository;
 import com.ak0411.filmfolio.repositories.UserRepository;
 import com.ak0411.filmfolio.services.FilmService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class FilmServiceImpl implements FilmService {
@@ -28,7 +32,13 @@ public class FilmServiceImpl implements FilmService {
     }
 
     public List<Film> readAll() {
-        return filmRepository.findAll();
+        return StreamSupport
+                .stream(filmRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
+
+    public Page<Film> readAll(Pageable pageable) {
+        return filmRepository.findAll(pageable);
     }
 
     public Film readOne(String id) {

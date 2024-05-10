@@ -7,15 +7,13 @@ import com.ak0411.filmfolio.domain.entities.Film;
 import com.ak0411.filmfolio.domain.entities.Review;
 import com.ak0411.filmfolio.domain.entities.User;
 import com.ak0411.filmfolio.services.FilmService;
-import com.ak0411.filmfolio.views.Views;
-import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/films")
@@ -27,14 +25,11 @@ class FilmController {
     }
 
     @GetMapping
-    @JsonView(Views.Film.class)
-    ResponseEntity<List<Film>> readAll() {
-        List<Film> response = filmService.readAll();
-        return ResponseEntity.ok(response);
+    Page<Film> readAll(Pageable pageable) {
+        return filmService.readAll(pageable);
     }
 
     @GetMapping("/{id}")
-    @JsonView(Views.FilmExtended.class)
     ResponseEntity<Film> readOne(@PathVariable String id) {
         Film response = filmService.readOne(id);
         return ResponseEntity.ok(response);
