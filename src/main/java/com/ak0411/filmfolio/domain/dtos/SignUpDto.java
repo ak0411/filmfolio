@@ -1,8 +1,6 @@
 package com.ak0411.filmfolio.domain.dtos;
 
-import com.ak0411.filmfolio.annotations.EnumValidator;
 import com.ak0411.filmfolio.enums.UserRole;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -14,10 +12,9 @@ public record SignUpDto(
         String username,
 
         @NotNull(message = "Password cannot be empty")
-        @Min(value = 5, message = "Password should be at least 5 characters long")
+        @Size(min = 5, message = "Password should be at least 5 characters long")
         String password,
 
-        @EnumValidator(enumClass = UserRole.class)
         UserRole role
 ) {
 }

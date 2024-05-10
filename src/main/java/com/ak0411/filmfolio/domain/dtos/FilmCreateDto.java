@@ -1,6 +1,5 @@
 package com.ak0411.filmfolio.domain.dtos;
 
-import com.ak0411.filmfolio.annotations.EnumValidator;
 import com.ak0411.filmfolio.annotations.YearValidator;
 import com.ak0411.filmfolio.enums.Genre;
 import jakarta.validation.constraints.NotBlank;
@@ -20,7 +19,6 @@ public record FilmCreateDto(
         @YearValidator
         Integer year,
 
-        @EnumValidator(enumClass = Genre.class)
         Set<Genre> genre
 ) {
 }

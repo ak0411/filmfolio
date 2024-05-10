@@ -2,7 +2,6 @@ package com.ak0411.filmfolio.domain.entities;
 
 import com.ak0411.filmfolio.enums.UserRole;
 import com.ak0411.filmfolio.views.Views;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import lombok.*;
@@ -42,11 +41,11 @@ public class User implements UserDetails {
     private UserRole role;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_film",
-            joinColumns = @JoinColumn(name = "film_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+    @JoinTable(
+            name = "user_film",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "film_id")
     )
-    @JsonProperty("favorite_films")
     @JsonView(Views.User.class)
     private Set<Film> favoriteFilms;
 

@@ -1,6 +1,5 @@
 package com.ak0411.filmfolio.domain.entities;
 
-import com.ak0411.filmfolio.annotations.EnumValidator;
 import com.ak0411.filmfolio.annotations.YearValidator;
 import com.ak0411.filmfolio.enums.Genre;
 import com.ak0411.filmfolio.views.Views;
@@ -36,7 +35,6 @@ public class Film {
     @JsonView({Views.UserExtended.class, Views.Film.class})
     private Integer year;
 
-    @EnumValidator(enumClass = Genre.class)
     @JsonView({Views.UserExtended.class, Views.Film.class})
     private Set<Genre> genre;
 

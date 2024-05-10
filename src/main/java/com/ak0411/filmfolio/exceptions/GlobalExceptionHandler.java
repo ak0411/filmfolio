@@ -26,7 +26,6 @@ class Error {
 //@ControllerAdvice
 @RestControllerAdvice
 class GlobalExceptionHandler {
-
     @ExceptionHandler({FilmNotFoundException.class, UserNotFoundException.class})
     ResponseEntity<Map<String, List<String>>> handleNotFoundException(RuntimeException ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
@@ -63,18 +62,5 @@ class GlobalExceptionHandler {
         errorResponse.put("errors", errors);
         return errorResponse;
     }
-//    @ResponseBody
-//    @ExceptionHandler({FilmNotFoundException.class, UserNotFoundException.class})
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    Error handleNotFound(RuntimeException ex) {
-//        return new Error(HttpStatus.NOT_FOUND, ex.getMessage());
-//    }
-//
-//    @ResponseBody
-//    @ExceptionHandler({AlreadyReviewedException.class})
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    Error handleAlreadyReviewed(RuntimeException ex) {
-//        return new Error(HttpStatus.BAD_REQUEST, ex.getMessage());
-//    }
 }
 
