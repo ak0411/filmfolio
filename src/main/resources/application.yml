@@ -20,7 +20,9 @@ security:
   jwt:
     token:
       secret-key: ${JWT_SECRET}
+api:
+  tmdb-key: ${TMDB_KEY}
 
-#logging:
-#  level:
-#    ROOT: DEBUG
+  #logging:
+  # level:
+  #  ROOT: DEBUG

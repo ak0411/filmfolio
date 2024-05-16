@@ -3,7 +3,7 @@ package com.ak0411.filmfolio.domain.entities;
 import com.ak0411.filmfolio.enums.Rating;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -34,6 +34,6 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "film_id")
-    @JsonIgnoreProperties({"reviews", "favorites"})
+    @JsonIncludeProperties({"title", "genres", "imdb_id", "overview", "release_date"})
     private Film film;
 }

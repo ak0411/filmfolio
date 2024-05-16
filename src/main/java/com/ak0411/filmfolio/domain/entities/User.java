@@ -2,7 +2,6 @@ package com.ak0411.filmfolio.domain.entities;
 
 import com.ak0411.filmfolio.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity(name = "users")
@@ -34,7 +34,6 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -43,12 +42,11 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "film_id")
     )
-    @JsonIncludeProperties({"title", "year", "genre", "imdb_id"})
-    private List<Film> favoriteFilms;
+    @JsonIncludeProperties({"title", "release_date", "genres", "imdb_id"})
+    private Set<Film> favoriteFilms;
 
     @OneToMany(mappedBy = "user")
     @JsonIncludeProperties({"text", "rating", "film"})
-    @JsonManagedReference
     private List<Review> reviews;
 
     public User(String name, String username, String password, UserRole role) {

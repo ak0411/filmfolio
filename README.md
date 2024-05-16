@@ -46,20 +46,20 @@ post reviews, and more.
 ##### Parameters
 
 | Name | Type     | Description                       |
-  |:-----|:---------|:----------------------------------|
+|:-----|:---------|:----------------------------------|
 | `id` | `string` | **Required** Id of film to fetch. |
 
 #### Responses
 
 | Http Status     | Content-Type       | Description               |
-  |:----------------|:-------------------|:--------------------------|
+|:----------------|:-------------------|:--------------------------|
 | `200 OK`        | `application/json` | Successful operation.     |
 | `404 Not Found` | `application/json` | Film with ´id´ not found. |
 
 </details>
 
 <details>
-  <summary><code>POST</code> <code><b>/api/v1/films/{id}/favorite</b></code> <code>Favorite film</code></summary>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/favorite</b></code> <code>Favorite film (Authenticated user only)</code></summary>
 
 ##### Headers
 
@@ -70,13 +70,13 @@ post reviews, and more.
 ##### Parameters
 
 | Name | Type     | Description                          |
-  |:-----|:---------|:-------------------------------------|
+|:-----|:---------|:-------------------------------------|
 | `id` | `string` | **Required** Id of film to favorite. |
 
 #### Responses
 
 | Http Code       | Content-Type       | Description               |
-  |:----------------|:-------------------|:--------------------------|
+|:----------------|:-------------------|:--------------------------|
 | `200 OK`        | `nosniff`          | Successful operation.     |
 | `403 Forbidden` | `nosniff`          | Unauthorized operation.   |
 | `404 Not Found` | `application/json` | Film with `id` not found. |
@@ -84,24 +84,24 @@ post reviews, and more.
 </details>
 
 <details>
-  <summary><code>POST</code> <code><b>/api/v1/films/{id}/unfavorite</b></code> <code>Unfavorite film</code></summary>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/unfavorite</b></code> <code>Unfavorite film (Authenticated user only)</code></summary>
 
 ##### Headers
 
 | Type            | Value            | Description                                             |
-  |:----------------|:-----------------|:--------------------------------------------------------|
+|:----------------|:-----------------|:--------------------------------------------------------|
 | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
 
 ##### Parameters
 
 | Name | Type     | Description                            |
-  |:-----|:---------|:---------------------------------------|
+|:-----|:---------|:---------------------------------------|
 | `id` | `string` | **Required** Id of film to unfavorite. |
 
 #### Responses
 
 | Http Code       | Content-Type       | Description               |
-  |:----------------|:-------------------|:--------------------------|
+|:----------------|:-------------------|:--------------------------|
 | `200 OK`        | `nosniff`          | Successful operation.     |
 | `403 Forbidden` | `nosniff`          | Unauthorized operation.   |
 | `404 Not Found` | `application/json` | Film with `id` not found. |
@@ -109,25 +109,25 @@ post reviews, and more.
 </details>
 
 <details>
-  <summary><code>POST</code> <code><b>/api/v1/films/{id}/review</b></code> <code>Review film</code></summary>
+  <summary><code>POST</code> <code><b>/api/v1/films/{id}/review</b></code> <code>Review film (Authenticated user only)</code></summary>
 
 ##### Headers
 
 | Type            | Value            | Description                                             |
-  |:----------------|:-----------------|:--------------------------------------------------------|
+|:----------------|:-----------------|:--------------------------------------------------------|
 | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
 
 ##### Parameters
 
 | Name   | Type               | Description                        |
-  |:-------|:-------------------|:-----------------------------------|
+|:-------|:-------------------|:-----------------------------------|
 | `id`   | `string`           | **Required** Id of film to update. |
 | `body` | `application/json` | **Required** Film object to add.   |
 
 #### Body
 
 | Field    | Type             | Description                  |
-  |:---------|:-----------------|:-----------------------------|
+|:---------|:-----------------|:-----------------------------|
 | `text`   | `string`         | **Optional** Review text.    |
 | `rating` | `integer/string` | **Required**  Rate the film. |
 
@@ -151,10 +151,28 @@ Example body:
 #### Responses
 
 | Http Code       | Content-Type       | Description               |
-  |:----------------|:-------------------|:--------------------------|
+|:----------------|:-------------------|:--------------------------|
 | `201 Created`   | `nosniff`          | Successful operation.     |
 | `403 Forbidden` | `nosniff`          | Unauthorized operation.   |
 | `404 Not Found` | `application/json` | Film with `id` not found. |
+
+</details>
+
+<details>
+  <summary><code>POST</code> <code><b>/api/v1/films/{imdb_id}</b></code> <code>Add film using IMDB id (Authenticated user only)</code></summary>
+
+##### Headers
+
+| Type            | Value            | Description                                             |
+|:----------------|:-----------------|:--------------------------------------------------------|
+| `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
+
+#### Responses
+
+| Http Status     | Content-Type       | Description                        |
+|:----------------|:-------------------|:-----------------------------------|
+| `201 Created`   | `application/json` | Successful operation.              |
+| `403 Forbidden` | `application/json` | Unauthorized or malformed request. |
 
 </details>
 
@@ -164,47 +182,38 @@ Example body:
 ##### Headers
 
 | Type            | Value            | Description                                             |
-  |:----------------|:-----------------|:--------------------------------------------------------|
+|:----------------|:-----------------|:--------------------------------------------------------|
 | `Authorization` | `Bearer <token>` | **Required** Authentication token to identify the user. |
 
 ##### Parameters
 
 | Name   | Type               | Description                      |
-  |:-------|:-------------------|:---------------------------------|
+|:-------|:-------------------|:---------------------------------|
 | `body` | `application/json` | **Required** Film object to add. |
 
 #### Body
 
-| Field   | Type      | Description                     |
-  |:--------|:----------|:--------------------------------|
-| `title` | `string`  | **Required** Title of the film. |
-| `year`  | `integer` | **Required** Year of the film.  |
-| `genre` | `array`   | Genre(s) of the film .          |
-
-The `genre` field can be `null`, or an array containing one or more of the following genre values:
-
-- ACTION
-- COMEDY
-- DRAMA
-- ROMANCE
-- ADVENTURE
-- SCIENCE_FICTION
-- FANTASY
-- HORROR
-- THRILLER
-- ANIMATION
-- MYSTERY
+| Field          | Type       | Description                            |
+|:---------------|:-----------|:---------------------------------------|
+| `imdb_id`      | `string`   | **Required** Id of the film.           |
+| `title`        | `string`   | **Required** Title of the film.        |
+| `release_date` | `string`   | **Required** Release date of the film. |
+| `genres`       | `string[]` | Genre(s) of the film.                  |
+| `overview`     | `string`   | An overview of the film.               |
+| `poster_path`  | `string`   | Path to the film poster.               |
 
 Example body:
 
   ```json
   {
   "title": "FILM TITLE",
-  "year": 2022,
-  "genre": [
-    "ACTION",
-    "ADVENTURE"
-  ]
+  "release_date": "2024-03-19",
+  "genres": [
+    "Action",
+    "Adventure"
+  ],
+  "overview": "A short overview of the film.",
+  "poster_path": "/path_to_film_poster.png"
 }
   ```
 
@@ -253,42 +262,30 @@ Example body:
 ##### Parameters
 
 | Name   | Type               | Description                        |
-  |:-------|:-------------------|:-----------------------------------|
+|:-------|:-------------------|:-----------------------------------|
 | `id`   | `string`           | **Required** Id of film to update. |
 | `body` | `application/json` | **Required** Film object to add.   |
 
 #### Body
 
-| Field   | Type      | Description                     |
-  |:--------|:----------|:--------------------------------|
-| `title` | `string`  | **Required** Title of the film. |
-| `year`  | `integer` | **Required** Year of the film.  |
-| `genre` | `array`   | Genre(s) of the film.           |
+| Field          | Type       | Description                             |
+|:---------------|:-----------|:----------------------------------------|
+| `title`        | `string`   | **Required** Title of the film.         |
+| `release_date` | `string`   | **Required** Release date of the film.  |
+| `genres`       | `string[]` | Genre(s) of the film.                   |
+| `overview`     | `string`   | An overview of the film.                |
+| `poster_path`  | `string`   | Path to the film poster.                |
 
-The `genre` field can be `null`, or an array containing one or more of the following genre values:
-
-- ACTION
-- COMEDY
-- DRAMA
-- ROMANCE
-- ADVENTURE
-- SCIENCE_FICTION
-- FANTASY
-- HORROR
-- THRILLER
-- ANIMATION
-- MYSTERY
 
 Example body:
 
   ```json
-  {
-  "title": "FILM TITLE",
-  "year": 2022,
-  "genre": [
-    "ACTION",
-    "ADVENTURE"
-  ]
+{
+  "title": "The Horror",
+  "genres": [ "Horror", "Thriller", "Mystery" ],
+  "overview": "My own film",
+  "release_date": "2024-05-16",
+  "poster_path": "/MY_FILM_POSTER.jpg"
 }
   ```
 

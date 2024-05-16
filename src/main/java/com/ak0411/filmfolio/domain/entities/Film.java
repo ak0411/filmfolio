@@ -1,39 +1,40 @@
 package com.ak0411.filmfolio.domain.entities;
 
-import com.ak0411.filmfolio.annotations.YearValidator;
-import com.ak0411.filmfolio.enums.Genre;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity(name = "films")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "imdbId")
 public class Film {
-
     @Id
-    @Pattern(regexp = "tt\\d+", message = "Film id should follow the imdbId format")
+    @Column(name = "imdb_id")
     @JsonProperty("imdb_id")
-    private String id;
+    private String imdbId;
 
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
-    @YearValidator
-    private Integer year;
+    @Column(name = "release_date")
+    @JsonProperty("release_date")
+    private String releaseDate;
 
-    @Enumerated
-    private Set<Genre> genre;
+    private List<String> genres;
+
+    @Column(length = 1000)
+    private String overview;
+
+    @Column(name = "poster_path")
+    @JsonProperty("poster_path")
+    private String posterPath;
 
     @JsonProperty("favorites")
     private int numberOfFavorites;
@@ -42,11 +43,18 @@ public class Film {
     @JsonIgnore
     private List<User> favoritedByUsers;
 
-    @OneToMany(mappedBy = "film")
+    @OneToMany(mappedBy = "film", cascade = CascadeType.REMOVE)
     @JsonIncludeProperties({"text", "rating"})
     private List<Review> reviews;
 
     public int getNumberOfFavorites() {
         return favoritedByUsers != null ? favoritedByUsers.size() : 0;
+    }
+
+    @PreRemove
+    private void preRemove() {
+        for (User user : favoritedByUsers) {
+            user.removeFavorite(this);
+        }
     }
 }

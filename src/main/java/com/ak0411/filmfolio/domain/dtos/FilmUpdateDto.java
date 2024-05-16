@@ -1,22 +1,23 @@
 package com.ak0411.filmfolio.domain.dtos;
 
-import com.ak0411.filmfolio.annotations.YearValidator;
-import com.ak0411.filmfolio.enums.Genre;
-import jakarta.persistence.Enumerated;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
-import java.util.Set;
+import java.util.List;
 
 public record FilmUpdateDto(
-        @NotBlank(message = "Film title cannot be empty")
+        @NotBlank
         String title,
 
-        @NotNull
-        @YearValidator
-        Integer year,
+        @NotBlank
+        @JsonProperty("release_date")
+        String releaseDate,
 
-        @Enumerated
-        Set<Genre> genre
+        List<String> genres,
+
+        String overview,
+
+        @JsonProperty("poster_path")
+        String posterPath
 ) {
 }

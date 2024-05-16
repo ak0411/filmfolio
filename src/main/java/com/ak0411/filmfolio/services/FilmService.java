@@ -15,6 +15,8 @@ public interface FilmService {
 
     Film readOne(String id);
 
+    Film add(String imdbId);
+
     Film create(Film film);
 
     void favorite(String id);

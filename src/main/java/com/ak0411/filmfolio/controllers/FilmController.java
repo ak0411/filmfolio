@@ -35,17 +35,24 @@ class FilmController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/{imdbId}")
+    public ResponseEntity<Film> addFilm(@PathVariable String imdbId) {
+        Film film = filmService.add(imdbId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(film);
+    }
 
     @PostMapping
     ResponseEntity<Film> createFilm(@Valid @RequestBody FilmCreateDto dto) {
-        Film newFilm = Film.builder()
-                .id(dto.id())
+        Film film = Film.builder()
+                .imdbId(dto.imdbId())
                 .title(dto.title())
-                .year(dto.year())
-                .genre(dto.genre())
+                .releaseDate(dto.releaseDate())
+                .genres(dto.genres())
+                .overview(dto.overview())
+                .posterPath(dto.posterPath())
                 .build();
 
-        Film response = filmService.create(newFilm);
+        Film response = filmService.create(film);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -72,16 +79,18 @@ class FilmController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping("/{id}")
-    ResponseEntity<Film> updateFilm(@PathVariable String id, @Valid @RequestBody FilmUpdateDto dto) {
-        Film updateFilm = Film.builder()
-                .id(id)
+    @PutMapping("/{imdbId}")
+    ResponseEntity<Film> updateFilm(@PathVariable String imdbId, @Valid @RequestBody FilmUpdateDto dto) {
+        Film film = Film.builder()
+                .imdbId(imdbId)
                 .title(dto.title())
-                .year(dto.year())
-                .genre(dto.genre())
+                .releaseDate(dto.releaseDate())
+                .genres(dto.genres())
+                .overview(dto.overview())
+                .posterPath(dto.posterPath())
                 .build();
 
-        Film response = filmService.update(updateFilm);
+        Film response = filmService.update(film);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

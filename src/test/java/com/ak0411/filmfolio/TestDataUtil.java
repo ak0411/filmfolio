@@ -4,8 +4,6 @@ import com.ak0411.filmfolio.domain.dtos.SignUpDto;
 import com.ak0411.filmfolio.domain.entities.User;
 import com.ak0411.filmfolio.enums.UserRole;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.UUID;
 
 public class TestDataUtil {
@@ -19,8 +17,6 @@ public class TestDataUtil {
                 .username("alice")
                 .password("alice123")
                 .role(UserRole.ADMIN)
-                .reviews(new ArrayList<>())
-                .favoriteFilms(new HashSet<>())
                 .build();
     }
 

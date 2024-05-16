@@ -2,6 +2,7 @@ package com.ak0411.filmfolio.services.impl;
 
 import com.ak0411.filmfolio.domain.dtos.SignUpDto;
 import com.ak0411.filmfolio.domain.entities.User;
+import com.ak0411.filmfolio.enums.UserRole;
 import com.ak0411.filmfolio.exceptions.InvalidJwtException;
 import com.ak0411.filmfolio.repositories.UserRepository;
 import com.ak0411.filmfolio.services.AuthService;
@@ -30,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
             throw new InvalidJwtException("Username already exists");
         }
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.name(), data.username(), encryptedPassword, data.role());
+        User newUser = new User(data.name(), data.username(), encryptedPassword, data.role() != null ? data.role() : UserRole.USER);
         return userRepository.save(newUser);
     }
 }
