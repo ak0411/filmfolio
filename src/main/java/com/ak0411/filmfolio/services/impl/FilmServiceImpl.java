@@ -77,10 +77,6 @@ public class FilmServiceImpl implements FilmService {
         Film film = filmRepository.findById(id)
                 .orElseThrow(() -> new FilmNotFoundException(id));
 
-        if (reviewRepository.existsByFilmAndUser(film, currentUser)) {
-            throw new AlreadyReviewedException();
-        }
-
         currentUser.addFavorite(film);
 
         userRepository.save(currentUser);
