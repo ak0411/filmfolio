@@ -34,6 +34,6 @@ public class Review {
 
     @ManyToOne
     @JoinColumn(name = "film_id")
-    @JsonIncludeProperties({"title", "genres", "imdb_id", "overview", "release_date"})
+    @JsonIncludeProperties({"title", "imdb_id"})
     private Film film;
 }
