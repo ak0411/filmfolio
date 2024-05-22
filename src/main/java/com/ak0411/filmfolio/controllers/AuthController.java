@@ -1,7 +1,7 @@
 package com.ak0411.filmfolio.controllers;
 
 import com.ak0411.filmfolio.config.auth.TokenProvider;
-import com.ak0411.filmfolio.domain.dtos.JwtDto;
+import com.ak0411.filmfolio.domain.dtos.UserTokenDto;
 import com.ak0411.filmfolio.domain.dtos.SignInDto;
 import com.ak0411.filmfolio.domain.dtos.SignUpDto;
 import com.ak0411.filmfolio.domain.entities.User;
@@ -36,10 +36,11 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtDto> signIn(@RequestBody @Valid SignInDto data) {
+    public ResponseEntity<UserTokenDto> signIn(@RequestBody @Valid SignInDto data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         var authUser = authenticationManager.authenticate(usernamePassword);
-        var accessToken = tokenService.generateAccessToken((User) authUser.getPrincipal());
-        return ResponseEntity.ok(new JwtDto(accessToken));
+        var currentUser = (User) authUser.getPrincipal();
+        var accessToken = tokenService.generateAccessToken(currentUser);
+        return ResponseEntity.ok(new UserTokenDto(currentUser.getName(), currentUser.getUsername(), accessToken));
     }
 }

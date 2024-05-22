@@ -1,7 +1,5 @@
 package com.ak0411.filmfolio.exceptions;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +14,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Getter
-@AllArgsConstructor
-class Error {
-    private HttpStatus status;
-    private String message;
-}
 
 //@ControllerAdvice
 @RestControllerAdvice
